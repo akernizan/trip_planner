@@ -42,25 +42,25 @@ class TripPlanner
     # use HTTParty.get to get the forecast, and then turn it into an array of
     # Weather objects... you  might want to institute the two methods below
     # so this doesn't get out of hand...
+   
+    @retrieve_forecast = call_api.parse_result
 
-    @forecast = cgi.escape(@forecast)
-    units = "imperial" 
-    options = "daily?q=#{CGI::escape(city)}&mode=json&units=#{units}&cnt=#{days}"
-    url = "http://api.openweathermap.org/data/2.5/forecast/#{options}"
   end
   
-  # def call_api
-  # end
-  #
-  # def parse_result
-  # end
+  def call_api
+    response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast/#{options}")
+  end
+  
+  def parse_result
+    result = JSON.parse(response.body)
+  end
   
   def create_recommendation
     # once you have the forecast, ask each Weather object for the appropriate
     # clothing and accessories, store the result in @recommendation.  You might
     # want to implement the two methods below to help you kee this method
     # smaller...
-    @recommendation = recommendation
+    @recommendation = collect_clothes.collect_accessories
   end
   
   # def collect_clothes
@@ -96,19 +96,33 @@ class Weather
   ]
   
   def initialize(min_temp, max_temp, condition)
-    
+    @min_temp = min_temp
+    @max_temp = max_temp
+    @condition = condition
   end
   
   def self.clothing_for(temp)
     # This is a class method, have it find the hash in CLOTHES so that the 
     # input temp is between min_temp and max_temp, and then return the 
     # recommendation.
+
+      CLOTHES.select do |temp|
+        if (CLOTHES[:min_temp] == -50) || (CLOTHES[:max_temp] <= 0)
+          puts "You should wear a #{CLOTHES[:recommendation.sample]}"
+      end
   end
   
   def self.accessories_for(condition)
     # This is a class method, have it find the hash in ACCESSORIES so that
     # the condition matches the input condition, and then return the
     # recommendation.
+        ACCESSORIES.select do |condition|
+         if ACCESSORIES[:condition] == "Rainy"
+              puts "You should wear #{ACCESSORIES[:recommendation]}"
+            
+          end 
+
+
   end
   
   def appropriate_clothing
