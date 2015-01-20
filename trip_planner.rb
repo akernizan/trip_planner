@@ -13,10 +13,13 @@ class TripPlanner
     # After, you should display the recommendation, and provide an option to 
     # save it to disk.  There are two optional methods below that will keep this
     # method cleaner.
+        
+
 
   end
   
   # def display_recommendation
+
   # end
   #
   # def save_recommendation
@@ -107,8 +110,10 @@ class Weather
     # recommendation.
 
       CLOTHES.select do |temp|
-        if (CLOTHES[:min_temp] == -50) || (CLOTHES[:max_temp] <= 0)
-          puts "You should wear a #{CLOTHES[:recommendation.sample]}"
+        if (CLOTHES[:min_temp] == -50) 
+          puts "You should wear a #{@min_temp}"
+        else (CLOTHES[:max_temp] <= 0)
+          puts "You should wear #{@max_temp}"
       end
   end
   
@@ -116,13 +121,12 @@ class Weather
     # This is a class method, have it find the hash in ACCESSORIES so that
     # the condition matches the input condition, and then return the
     # recommendation.
+
         ACCESSORIES.select do |condition|
-         if ACCESSORIES[:condition] == "Rainy"
+         if ACCESSORIES[:condition] == @condition
               puts "You should wear #{ACCESSORIES[:recommendation]}"
             
           end 
-
-
   end
   
   def appropriate_clothing
@@ -131,6 +135,10 @@ class Weather
     # clothing for the weather object.
     # You should avoid making the same suggestion twice... think
     # about using .uniq here
+      appropriate_clothing = CLOTHES[:recommendation].uniq {|c| c.sample}
+
+
+
   end
   
   def appropriate_accessories
@@ -138,6 +146,8 @@ class Weather
     # an array of appropriate accessories for the weather object.
     # You should avoid making the same suggestion twice... think
     # about using .uniq here
+
+    appropriate_clothing = CLOTHES[:recommendation].uniq {|r| r.sample}
   end
 end
 
@@ -145,7 +155,9 @@ class User
   attr_reader :name, :destination, :duration
   
   def initialize(name, destination, duration)
-    
+    @name = name
+    @destination = destination
+    @duration = duration
   end
 end
 
