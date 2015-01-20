@@ -13,6 +13,7 @@ class TripPlanner
     # After, you should display the recommendation, and provide an option to 
     # save it to disk.  There are two optional methods below that will keep this
     # method cleaner.
+
   end
   
   # def display_recommendation
@@ -21,15 +22,31 @@ class TripPlanner
   # def save_recommendation
   # end
   
-  def create_user
+  def create_user(name,destination,duration)
     # provide the interface asking for name, destination and duration
     # then, create and store the User object
+    puts "Name: "
+    puts = gets.chomp
+
+    puts "Destination: "
+    puts = gets.chomp
+
+    puts "Duration: "
+    puts = gets.chomp
+
+
+    @User = User.new(name, destination, duration)
   end
   
   def retrieve_forecast
     # use HTTParty.get to get the forecast, and then turn it into an array of
     # Weather objects... you  might want to institute the two methods below
     # so this doesn't get out of hand...
+
+    @forecast = cgi.escape(@forecast)
+    units = "imperial" 
+    options = "daily?q=#{CGI::escape(city)}&mode=json&units=#{units}&cnt=#{days}"
+    url = "http://api.openweathermap.org/data/2.5/forecast/#{options}"
   end
   
   # def call_api
@@ -43,6 +60,7 @@ class TripPlanner
     # clothing and accessories, store the result in @recommendation.  You might
     # want to implement the two methods below to help you kee this method
     # smaller...
+    @recommendation = recommendation
   end
   
   # def collect_clothes
